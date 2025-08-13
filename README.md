@@ -33,6 +33,51 @@ hello-git/
 ├── hello.txt      # Test file first
 └── a.txt       # Test file second
 
+## 📚 Some extra features
+🔄 Git Sync Aliases
+To save time on adding, committing, pulling, and pushing changes, you can set up custom Git aliases. These shortcuts let you sync changes with one simple command.
+
+1️⃣ Auto-Timestamp Sync
+This version automatically creates a commit message with the current date and time.
+
+Setup
+Run this once in your terminal:
+git config --global alias.sync '!b=$(git rev-parse --abbrev-ref HEAD) && git add . && git diff-index --quiet HEAD || git commit -m "Sync on $(date +"%Y-%m-%d %H:%M:%S")" && git pull --rebase origin $b && git push origin $b'
+
+## Usage
+From any Git repo: Just provide following command in git bash terminal
+git sync
+
+What it does:
+
+1. Detects the current branch (main, master, or others)
+
+2. Adds all changes
+
+3. Commits with a timestamp (only if there are changes)
+
+4. Pulls the latest changes from GitHub with --rebase
+
+5. Pushes your commits to the remote branch
+
+2️⃣ Manual Message Sync
+This version lets you enter your own commit message instead of using a timestamp.
+
+Setup
+Run this once:
+git config --global alias.syncm '!f() { b=$(git rev-parse --abbrev-ref HEAD); git add .; git commit -m "$1"; git pull --rebase origin $b; git push origin $b; }; f'
+
+## Usage
+From any Git repo: Run following command in git bash terminal
+git syncm "Your custom commit message here"
+
+💡 Tips
+You can use both versions — git sync for quick saves, git syncm when you need a meaningful commit message.
+
+These aliases work in any repository on your system after setup.
+
+If you ever want to see your saved aliases, run: git config --global --get-regexp alias
+
 💡 Fun Git Tip
 “Commit often, push regularly, and never fear the merge!” 💪
 
